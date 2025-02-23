@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:46 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/22 20:56:22 by rpambo           ###   ########.fr       */
+/*   Updated: 2025/02/23 16:53:43 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
-int	animate_player(t_so_long *root)
+void	animate_player(t_so_long *root)
 {
 	root->player_frame = (root->player_frame + 1) % 2;
 	render_frame(root);
+}
+
+int	game_loop(t_so_long *root)
+{
+	static int	frame_count = 0;
+
+	if (frame_count % 20 == 0)
+		move_enemy(root);
+	render_frame(root);
+	display_move_count(root);
+	frame_count++;
 	return (0);
 }
 
@@ -42,8 +53,7 @@ int	main(int argc, char **argv)
 	root = initialize_so_long(argv[1]);
 	if (!root)
 		print_error("Failed to initialize game", errno);
-	render_frame(root);
-	//mlx_loop_hook(root->mlx, animate_player, root);
+	mlx_loop_hook(root->mlx, game_loop, root);
 	mlx_hook(root->mlx_win, 2, 1L << 0, handle_input, root);
 	mlx_loop(root->mlx);
 	return (0);
