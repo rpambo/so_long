@@ -6,7 +6,7 @@
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 14:43:35 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/23 08:44:37 by rpambo           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:05:50 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,34 @@ static void	collect_item(t_so_long *root, int new_x, int new_y)
 	}
 }
 
+void	count_player(int n)
+{
+	char	a;
+
+	if (n == -2147483648)
+	{
+		write(1, "-", 1);
+		count_player(214748364);
+		write(1, "8", 1);
+	}
+	else if (n > 9)
+	{
+		count_player(n / 10);
+		a = (n % 10 + '0');
+		write(1, &a, 1);
+	}
+	else if (n >= 0 && n <= 9)
+	{
+		a = (n + '0');
+		write(1, &a, 1);
+	}
+	else
+	{
+		write(1, "-", 1);
+		count_player(n * -1);
+	}
+}
+
 void	move_player(t_so_long *root, int dx, int dy)
 {
 	int	new_x;
@@ -57,6 +85,8 @@ void	move_player(t_so_long *root, int dx, int dy)
 		return ;
 	root->game->player_x = new_x;
 	root->game->player_y = new_y;
+	root->game->move_count++;
+	printable(root->game->move_count);
 	collect_item(root, new_x, new_y);
 	if (root->game->count_coll == 0)
 		root->game->map[root->game->exit_y][root->game->exit_x] = 2;

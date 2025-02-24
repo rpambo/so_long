@@ -6,7 +6,7 @@
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:08:31 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/23 10:41:00 by rpambo           ###   ########.fr       */
+/*   Updated: 2025/02/24 13:56:12 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_game
 	int		count_exit;
 	int		count_player;
 	int		enemy_dir;
+	int		move_count;
 	t_coord	*coll;
 }	t_game;
 
@@ -69,11 +70,15 @@ typedef struct s_so_long
 	int		player_dir;
 }	t_so_long;
 
+int				close_window(t_so_long *root);
 int				animate_player(t_so_long *root);
 int				handle_input(int key, t_so_long *root);
 unsigned int	mlx_get_pixel(t_img *img, int x, int y);
 unsigned int	mlx_rgb_to_int(int o, int r, int g, int b);
 
+void			ft_putendl_fd(char *s, int fd);
+void			printable(int n);
+void			count_player(int n);
 void			destroy_root(t_so_long *root, char *msg, int errms);
 void			print_error(char *errmsg, int errnum);
 void			game_init(t_so_long *root, char *file);

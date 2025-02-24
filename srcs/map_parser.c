@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_height_width.c                                 :+:      :+:    :+:   */
+/*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:32:23 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/22 21:34:00 by rpambo           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:39:31 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ static void	get_map_height(t_so_long *root, char *file)
 	}
 }
 
+void	check_map_size(t_so_long *root, int width, int height, char *file)
+{
+	if (width * SQUARE_SIZE > SCREENWIDTH
+		|| height * SQUARE_SIZE > SCREENHEIGHT)
+	{
+		free(file);
+		destroy_root(root, "the size is bigger than the screen", 0);
+	}
+}
+
 void	parse_map(t_so_long *root, char *map_str)
 {
 	if (!root || !root->game || !map_str)
@@ -69,6 +79,7 @@ void	parse_map(t_so_long *root, char *map_str)
 	}
 	get_map_width(root, map_str);
 	get_map_height(root, map_str);
+	check_map_size(root, root->game->width, root->game->height, map_str);
 	validate_map(root, map_str);
 	root->game->coll = malloc(sizeof(t_coord) * root->game->count_coll);
 	if (!root->game->coll)

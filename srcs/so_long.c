@@ -43,8 +43,8 @@ int	main(int argc, char **argv)
 	if (!root)
 		print_error("Failed to initialize game", errno);
 	render_frame(root);
-	//mlx_loop_hook(root->mlx, animate_player, root);
 	mlx_hook(root->mlx_win, 2, 1L << 0, handle_input, root);
+	mlx_hook(root->mlx_win, 17, 0, close_window, root);
 	mlx_loop(root->mlx);
 	return (0);
 }

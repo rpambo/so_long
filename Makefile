@@ -12,12 +12,12 @@
 
 NAME		=	so_long
 BONU_NAME	=	so_long_bonus
-CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror -no-pie
+CC			=	gcc
+FLAGS		=	-Wall -Wextra -Werror
 MLX			=	mlx/Makefile.gen
 LFT			=	libft/libft.a
 INC			=	-I ./srcs -I ./libft -I ./mlx
-LIB			=	-L ./libft -lft -L ./mlx -lmlx -lX11 -lXext -lm
+LIB = ./libft/*.o -L ./mlx -lmlx -lX11 -lXext -lm
 OBJ			=	$(SRC:.c=.o)
 OBJ_BONUS	= 	$(SRCBUNS:.c=.o)
 
@@ -33,7 +33,8 @@ SRC			= 	srcs/so_long.c \
 			   srcs/renderization.c \
 			   srcs/graphics.c \
 			   srcs/events.c \
-			   srcs/move.c
+			   srcs/move.c \
+			   srcs/error.c
 
 SRCBUNS			= bonus/srcs/so_long_bonus.c \
 			  bonus/srcs/ulils_bonus.c \
@@ -50,21 +51,23 @@ SRCBUNS			= bonus/srcs/so_long_bonus.c \
 			  bonus/srcs/move_bonus.c \
 			  bonus/srcs/move_enemy_bonus.c \
 			  bonus/srcs/store_positions.c \
-			  bonus/srcs/display_moviment.c
+			  bonus/srcs/display_moviment.c \
+			  bonus/srcs/error.c \
+			  bonus/srcs/allocate_game_resource_bonus.c
 
 all:		$(MLX) $(LFT) $(NAME)
 
 bonus: $(MLX) $(LFT) $(BONU_NAME)
 
 $(NAME):	$(OBJ)
-			@echo "[ .. ] Compiling Mandatory.."
+			@echo "Compiling Mandatory.."
 			@$(CC) $(FLAGS) -o $@ $^ $(LIB)
-			@echo "[ ✔ ] Mandatory Ready!"
+			@echo "Mandatory Ready!"
 
 $(BONU_NAME):	 $(OBJ_BONUS)
-			@echo "[ .. ] Compiling Bonus.."
+			@echo "Compiling Bonus.."
 			@$(CC) $(FLAGS) -o $@ $^ $(LIB)
-			@echo "[ ✔ ] Bonus Ready!"
+			@echo "Bonus Ready!"
 
 $(MLX):
 			@echo "Compiling MiniLibX.."
@@ -85,12 +88,12 @@ bonus/srcs/%.o: bonus/srcs/%.c
 clean:
 			@make -s clean -C libft
 			@rm -rf $(OBJ) $(OBJ_BONUS)
-			@echo "[ ✔ ] Object files removed."
+			@echo "Object files removed."
 
 fclean:		clean
 			@make -s fclean -C libft
 			@rm -rf $(NAME) $(BONU_NAME)
-			@echo "[ ✔ ] Binary files removed."
+			@echo "Binary files removed."
 
 re:			fclean all
 

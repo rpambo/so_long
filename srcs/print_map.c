@@ -6,7 +6,7 @@
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:30:36 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/23 08:47:52 by rpambo           ###   ########.fr       */
+/*   Updated: 2025/02/24 15:44:34 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ void	print_map(t_game *game)
 		printf("\n");
 		i++;
 	}
+}
+
+void	printable(int n)
+{
+	write(1, "Move :", 6);
+	count_player(n);
+	write(1, "\n", 1);
 }

@@ -48,6 +48,7 @@ static void	initialize_game(t_so_long *root, char *file)
 	root->game->count_coll = 0;
 	root->game->count_exit = 0;
 	root->game->count_player = 0;
+	root->game->move_count = 0;
 	load_map(root, file);
 }
 

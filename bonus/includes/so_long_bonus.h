@@ -84,6 +84,8 @@ int				handle_input(int key, t_so_long *root);
 unsigned int	mlx_get_pixel(t_img *img, int x, int y);
 unsigned int	mlx_rgb_to_int(int o, int r, int g, int b);
 
+void			ft_putendl_fd(char *s, int fd);
+void			allocate_game_resources(t_so_long *root, char *map_str);
 void			display_move_count(t_so_long *root);
 void			animate_player(t_so_long *root);
 void			destroy_root(t_so_long *root, char *msg, int errms);

@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 14:41:56 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/24 16:05:06 by rpambo           ###   ########.fr       */
+/*   Created: 2025/02/24 15:51:20 by rpambo            #+#    #+#             */
+/*   Updated: 2025/02/24 16:04:38 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	handle_input(int key, t_so_long *root)
+size_t	str_len(char *s)
 {
-	if (key == 65307)
-		destroy_root(root, 0, 0);
-	else if (key == 'w' || key == 65362)
-		move_player(root, 0, -1);
-	else if (key == 's' || key == 65364)
-		move_player(root, 0, 1);
-	else if (key == 'a' || key == 65361)
-		move_player(root, -1, 0);
-	else if (key == 'd' || key == 65363)
-		move_player(root, 1, 0);
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 
-int	close_window(t_so_long *root)
+void	ft_putendl_fd(char *s, int fd)
 {
-	destroy_root(root, 0, 0);
-	return (0);
+	if (s)
+	{
+		write(fd, s, str_len(s));
+		write(fd, "\n", 1);
+	}
 }

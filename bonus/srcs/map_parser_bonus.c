@@ -60,29 +60,13 @@ static void	get_map_height(t_so_long *root, char *file)
 	}
 }
 
-void	allocate_game_resources(t_so_long *root, char *map_str)
+void	check_map_size(t_so_long *root, int width, int height, char *file)
 {
-	root->game->coll = malloc(sizeof(t_coord) * root->game->count_coll);
-	if (!root->game->coll)
+	if (width * SQUARE_SIZE > SCREENWIDTH
+		|| height * SQUARE_SIZE > SCREENHEIGHT)
 	{
-		free(map_str);
-		destroy_root(root,
-			"Failed to allocate memory for collectibles!", errno);
-	}
-	root->game->enemy = malloc(sizeof(t_coord) * root->game->count_enemy);
-	if (!root->game->enemy)
-	{
-		free(root->game->coll);
-		free(map_str);
-		destroy_root(root, "Failed to allocate memory for enemies!", errno);
-	}
-	root->game->map = malloc(sizeof(int *) * root->game->height);
-	if (!root->game->map)
-	{
-		free(root->game->coll);
-		free(root->game->enemy);
-		free(map_str);
-		destroy_root(root, "Failed to allocate memory for map!", errno);
+		free(file);
+		destroy_root(root, "the size is bigger than the screen", 0);
 	}
 }
 
@@ -95,6 +79,7 @@ void	parse_map(t_so_long *root, char *map_str)
 	}
 	get_map_width(root, map_str);
 	get_map_height(root, map_str);
+	check_map_size(root, root->game->width, root->game->height, map_str);
 	validate_map(root, map_str);
 	allocate_game_resources(root, map_str);
 	convert_file_to_map(root, map_str);

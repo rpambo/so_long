@@ -6,7 +6,7 @@
 /*   By: rpambo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 23:16:54 by rpambo            #+#    #+#             */
-/*   Updated: 2025/02/23 08:57:50 by rpambo           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:39:10 by rpambo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	load_game_textures(t_so_long *root)
 	load_texture(root, &root->player[5], "./textures/player_left_open.xpm");
 	load_texture(root, &root->player[6], "./textures/player_right_closed.xpm");
 	load_texture(root, &root->player[7], "./textures/player_right_open.xpm");
-	load_texture(root, &root->exit, "./textures/house.xpm");
+	load_texture(root, &root->exit, "./textures/exit.xpm");
 	load_texture(root, &root->coll, "./textures/pokeball.xpm");
 	load_texture(root, &root->wall, "./textures/wall.xpm");
-	load_texture(root, &root->ground, "./textures/sand.xpm");
+	load_texture(root, &root->ground, "./textures/ground.xpm");
 }
 
 void	initialize_window(t_so_long *root)
@@ -46,10 +46,13 @@ void	initialize_window(t_so_long *root)
 	if (!root->mlx)
 		destroy_root(root, "Can't load mlx", 0);
 	root->mlx_win = mlx_new_window(root->mlx,
-			SCREENWIDTH, SCREENHEIGHT, "so_long");
+			root->game->width * SQUARE_SIZE,
+			root->game->height * SQUARE_SIZE, "so_long");
 	if (!root->mlx_win)
 		destroy_root(root, "Window can't open", 0);
-	root->mlx_img = mlx_new_image(root->mlx, SCREENWIDTH, SCREENHEIGHT);
+	root->mlx_img = mlx_new_image(root->mlx,
+			root->game->width * SQUARE_SIZE,
+			root->game->height * SQUARE_SIZE);
 	if (!root->mlx_img)
 		destroy_root(root, "mlx_new_image", 0);
 }
